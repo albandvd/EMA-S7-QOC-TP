@@ -40,9 +40,9 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 
-  /depenses/{id}:
+  /depenses/{depenseId}:
     parameters:
-      - name: id
+      - name: depenseId
         in: path
         required: true
         description: ID de la dépense
@@ -116,14 +116,29 @@ paths:
                   error:
                     type: string
                     example: Une erreur interne du serveur s'est produit.
-  /user/{id}:
+  /user/{userId}:
     parameters:
-      - name: id
+      - name: userId
         in: path
         required: true
         description: ID numérique de l'utilisateur
         schema:
           type: integer
+    post:
+      summary: Ajoute un user
+      description: Ajoute un user avec les données fournis dans le corps de la requête
+      tags:
+        - Users
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
     get:
       summary: Récupère un user spécifique
       description: Récupère un user spécifique en fonction de l'id fournit dans l'url.
@@ -146,21 +161,6 @@ paths:
                   error:
                     type: string
                     example: Une erreur interne du serveur s'est produit.
-    post:
-      summary: Ajoute un user
-      description: Ajoute un user avec les données fournis dans le corps de la requête
-      tags:
-        - Users
-      requestBody: 
-        content:
-          application/json: 
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        '201':
-          description: Données enregistrées avec succès.
-        '500':
-          description: Erreur interne du serveur.
     put:
       summary: Modifie un user
       description: Modifie un user avec les données fournis dans le corps de la requête
@@ -224,9 +224,9 @@ paths:
           description: Données enregistrées avec succès.
         '500':
           description: Erreur interne du serveur.
-  /cercle/{id}:
+  /cercle/{cercleId}:
     parameters:
-      - name: id
+      - name: cercleId
         in: path
         required: true
         description: ID numérique de l'utilisateur
@@ -280,6 +280,53 @@ paths:
         '500':
           description: Erreur interne du serveur.
 
+  /cercle/{cercleId}/user:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+    post:
+      summary: Ajoute un cercle
+      description: Ajoute un cercle avec les données fournis dans le corps de la requête
+      tags:
+        - Cercle
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Cercle'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
+  /cercle/{cercleId}/user/{userId}:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+      - name: userId
+        in: path
+        required: true
+        description: ID numérique de l'utilisateur
+        schema:
+          type: integer
+    delete:
+      summary: Supprime un utilisateur du cercle
+      description: Supprime le cercle ayant l'id spécifié dans l'URL.
+      tags:
+        - Cercle
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
 
 components:
   responses:
