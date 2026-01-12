@@ -328,6 +328,53 @@ paths:
         '500':
           description: Erreur interne du serveur.
 
+  /agreg/{cercleId}/magasin/:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+    get:
+      summary: Renvoi les magasins préférés des personnes d'un même cercle 
+      tags:
+        - Agrégation
+      responses:
+        '200':
+          description: Renvoi les magasins préférés des personnes d'un même cercle.
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Depense'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /agreg/{cercleId}/depense:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+    get:
+      summary: Renvoie le pourcentage de dépense des personnes d'un cercle
+      tags:
+        - Agrégation
+      responses:
+        '200':
+          description: Renvoie le pourcentage de dépense des personnes d'un cercle.
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Depense'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
 components:
   responses:
     BadRequest:
