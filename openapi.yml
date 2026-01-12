@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: KashKash
+  description: >
+    API regroupant des données sur les cercles de proches et leurs habitudes bancaires.
+  version: 1.0.12
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /depenses:
+    get:
+      summary: Récupère l'ensemble des dépenses
+      description: Récupère l'ensemble des dépenses de tous les utilisateurs et de tous les cercles.
+      tags:
+        - Dépenses
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Depenses'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+  /depenses/{id}:
+    get:
+      summary: Récupère une dépense spécifique
+      description: Récupère une dépense spécifique en fonction de l'id fournit dans l'url.
+      tags:
+        - Dépenses
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Depenses'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+    post:
+      summary: Ajoute une dépense
+      description: Ajoute une dépense avec les données fournis dans le corps de la requête
+      tags:
+        - Dépenses
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Depenses'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
+    put:
+      summary: Modifie une dépense
+      description: Modifie une dépense avec les données fournis dans le corps de la requête
+      tags:
+        - Dépenses
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Depenses'
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+    delete:
+      summary: Supprime une dépense
+      description: Supprime la dépense ayant l'id spécifié dans l'URL.
+      tags:
+        - Dépenses
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+
+  /user:
+    get:
+      summary: Récupère l'ensemble des users
+      description: Récupère l'ensemble des users.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+  /user/{id}:
+    get:
+      summary: Récupère un user spécifique
+      description: Récupère un user spécifique en fonction de l'id fournit dans l'url.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+    post:
+      summary: Ajoute un user
+      description: Ajoute un user avec les données fournis dans le corps de la requête
+      tags:
+        - Users
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
+    put:
+      summary: Modifie un user
+      description: Modifie un user avec les données fournis dans le corps de la requête
+      tags:
+        - Users
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+    delete:
+      summary: Supprime un user
+      description: Supprime le user ayant l'id spécifié dans l'URL.
+      tags:
+        - Users
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+
+
+
+
+components:
+  schemas:
+    User: 
+      type: object
+      properties:
+        Prenom:
+          type: string
+        Nom:
+          type: string
+        userId:
+          type: integer
+
+    Cercle:
+      type: object
+      properties:
+        Name:
+          type: string
+        UserList:
+          type: array
+          items:
+            type: integer
+
+    Depenses:
+      type: object
+      properties:
+        Description:
+          type: string
+        Montant:
+          type: number
+        Payeur:
+          type: string
+        Enseigne: 
+          type: string
+        Date:
+          type: string
+          format: date-time
