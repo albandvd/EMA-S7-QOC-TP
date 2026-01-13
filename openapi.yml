@@ -439,9 +439,9 @@ components:
           type: string
         montant:
           type: number
-        payeurId:
+        userId:
           type: integer
-        enseigne: 
+        magasin: 
           type: string
         date:
           type: string
