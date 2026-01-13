@@ -1,7 +1,6 @@
-import { Address } from '../../domain/address';
-
+import { Address, createAddressDTO } from "../../domain/address";
 export interface AddressPort {
-  listAddresses(): Promise<Address[]>;
-  getAddress(id: string): Promise<Address | null>;
-  createAddress(input: Omit<Address, 'id'>): Promise<Address>;
+	listAddresses(): Promise<Address[]>;
+	getAddress(id: string): Promise<Address | null>;
+	createAddress(input: createAddressDTO): Promise<Address>;
 }
