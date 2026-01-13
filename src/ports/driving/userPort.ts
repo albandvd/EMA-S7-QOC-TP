@@ -5,5 +5,5 @@ export interface UserPort {
   getUser(id: string): Promise<User | null>;
   createUser(input: Omit<User, 'userId'>): Promise<User>;
   updateUser(input: User): Promise<User>;
-  deleteUser(id: string): Promise<void>;
+  deleteUser(id: string): Promise<string>;
 }
