@@ -13,7 +13,7 @@ describe('inMemoryAddressRepo', () => {
   })
 
   it('should save an address', async () => {
-    const addressData = new Address('123 Main St','Anytown',12345);
+    const addressData = new Address('123 Main St','Anytown','12345');
     const savedAddress = await repo.save(addressData);
 
     expect(savedAddress).toHaveProperty('id');
@@ -22,7 +22,7 @@ describe('inMemoryAddressRepo', () => {
   });
 
   it('should get all addresses by duplicating variable', async () => {
-    addresses = [new Address('123 Main St','Anytown',12345)];
+    addresses = [new Address('123 Main St','Anytown','12345')];
     repo = new InMemoryAddressRepo(addresses);
     const allAddresses = await repo.findAll();
 
