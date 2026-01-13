@@ -13,3 +13,13 @@ export class Cercle {
     return this.name;
   }
 }
+
+export class createCercleDTO {
+  name: string;
+  userList: string[];
+
+  constructor(name: string, userList: string[]) {
+    this.name = name;
+    this.userList = userList;
+  }
+}

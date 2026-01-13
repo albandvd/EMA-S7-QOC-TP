@@ -26,3 +26,25 @@ export class Depense {
     return `${this.userId} - ${this.montant} - ${this.magasin} - ${this.date.toDateString()}`;
   }
 }
+
+export class createDepenseDTO {
+  description: string;
+  montant: string;
+  userId: string;
+  magasin: string;
+  date: Date;
+
+  constructor(
+    description: string,
+    montant: string,
+    userId: string,
+    magasin: string,
+    date: Date,
+  ) {
+    this.description = description;
+    this.montant = montant;
+    this.userId = userId;
+    this.magasin = magasin;
+    this.date = date;
+  }
+}
