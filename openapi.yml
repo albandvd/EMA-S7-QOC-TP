@@ -433,7 +433,7 @@ components:
       required:
         - description
         - montant
-        - payeurId
+        - userId
       properties:
         description:
           type: string
