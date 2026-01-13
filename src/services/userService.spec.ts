@@ -5,7 +5,7 @@ describe('UserService', () => {
   let mockRepo: {
     findAll: jest.Mock<Promise<User[]>, []>;
     findById: jest.Mock<Promise<User | null>, [string]>;
-    save: jest.Mock<Promise<User>, [Omit<User, 'id'>]>;
+    save: jest.Mock<Promise<User>, [Omit<User, 'userId'>]>;
     modify: jest.Mock<Promise<User>, [User]>;
     delete: jest.Mock<Promise<void>, [string]>;
   };
