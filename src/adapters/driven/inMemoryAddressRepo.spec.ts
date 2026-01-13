@@ -15,7 +15,6 @@ describe("inMemoryAddressRepo", () => {
 		const addressData = new createAddressDTO("123 Main St", "Anytown", 12345);
 		const savedAddress = await repo.save(addressData);
 
-		console.log(savedAddress);
 		expect(savedAddress).toHaveProperty("id");
 		expect(savedAddress.street).toBe(addressData.street);
 		expect(addresses.length).toBe(1);
