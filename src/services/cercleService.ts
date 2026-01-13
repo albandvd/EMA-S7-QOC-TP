@@ -23,4 +23,29 @@ export class CercleService implements CerclePort {
   async deleteCercle(id: string): Promise<void> {
     return this.repo.delete(id);
   }
+
+  async addUserToCercle(cercleId: string, userId: string): Promise<Cercle | null> {
+    const cercle = await this.repo.findById(cercleId);
+    if (!cercle) {
+      return null;
+    }
+    if (!cercle.userList.includes(userId)) {
+      cercle.userList.push(userId);
+      return this.repo.modify(cercle);
+    }
+    return cercle;
+  }
+
+  async removeUserFromCercle(cercleId: string, userId: string): Promise<Cercle | null> {
+    const cercle = await this.repo.findById(cercleId);
+    if (!cercle) {
+      return null;
+    }
+    const index = cercle.userList.indexOf(userId);
+    if (index !== -1) {
+      cercle.userList.splice(index, 1);
+      return this.repo.modify(cercle);
+    }
+    return cercle;
+  }
 }

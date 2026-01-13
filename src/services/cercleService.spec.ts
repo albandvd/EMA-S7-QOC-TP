@@ -57,5 +57,26 @@ describe('CercleService', () => {
     await expect(service.deleteCercle('2')).resolves.toBeUndefined();
     expect(mockRepo.delete).toHaveBeenCalledWith('2');
   });
-});
 
+  it('addUserToCercle ajoute un utilisateur si pas déjà présent', async () => {
+    const cercle: Cercle = { cercleId: '1', nom: 'Cercle A', userList: ['1'] } as unknown as Cercle;
+    mockRepo.findById.mockResolvedValue(cercle);
+    const updatedCercle: Cercle = { ...cercle, userList: ['1', '2'] } as unknown as Cercle;
+    mockRepo.modify.mockResolvedValue(updatedCercle);
+
+    await expect(service.addUserToCercle('1', '2')).resolves.toEqual(updatedCercle);
+    expect(mockRepo.findById).toHaveBeenCalledWith('1');
+    expect(mockRepo.modify).toHaveBeenCalledWith(updatedCercle);
+  });
+
+  it('removeUserFromCercle supprime un utilisateur s\'il est présent', async () => {
+    const cercle: Cercle = { cercleId: '1', nom: 'Cercle A', userList: ['1', '2'] } as unknown as Cercle;
+    mockRepo.findById.mockResolvedValue(cercle);
+    const updatedCercle: Cercle = { ...cercle, userList: ['1'] } as unknown as Cercle;
+    mockRepo.modify.mockResolvedValue(updatedCercle);
+
+    await expect(service.removeUserFromCercle('1', '2')).resolves.toEqual(updatedCercle);
+    expect(mockRepo.findById).toHaveBeenCalledWith('1');
+    expect(mockRepo.modify).toHaveBeenCalledWith(updatedCercle);
+  });
+});
