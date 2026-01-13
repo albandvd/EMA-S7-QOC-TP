@@ -5,10 +5,9 @@ describe('CercleService', () => {
   let mockRepo: {
     findAll: jest.Mock<Promise<Cercle[]>, []>;
     findById: jest.Mock<Promise<Cercle | null>, [string]>;
-    save: jest.Mock<Promise<Cercle>, [Omit<Cercle, 'CercleId'>]>;
+    save: jest.Mock<Promise<Cercle>, [Omit<Cercle, 'cercleId'>]>;
     modify: jest.Mock<Promise<Cercle>, [Cercle]>;
     delete: jest.Mock<Promise<void>, [string]>;
-
   };
   let service: CercleService;
 

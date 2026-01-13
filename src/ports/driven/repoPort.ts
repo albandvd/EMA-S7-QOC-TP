@@ -1,6 +1,7 @@
 import { Address } from '../../domain/address';
 import { User } from '../../domain/user';
 import { Depense } from '../../domain/depense';
+import { Cercle } from '../../domain/cercle';
 
 export interface AddressRepositoryPort {
   findAll(): Promise<Address[]>;
@@ -19,7 +20,15 @@ export interface UserRepositoryPort {
 export interface DepenseRepositoryPort {
   findAll(): Promise<Depense[]>;
   findById(id: string): Promise<Depense | null>;
-  save(depense: Omit<Depense, 'userId'>): Promise<Depense>;
+  save(depense: Omit<Depense, 'depenseId'>): Promise<Depense>;
   modify(depense: Depense): Promise<Depense>;
+  delete(id: string): Promise<void>;
+}
+
+export interface CercleRepositoryPort {
+  findAll(): Promise<Cercle[]>;
+  findById(id: string): Promise<Cercle | null>;
+  save(cercle: Omit<Cercle, 'cercleId'>): Promise<Cercle>;
+  modify(cercle: Cercle): Promise<Cercle>;
   delete(id: string): Promise<void>;
 }
