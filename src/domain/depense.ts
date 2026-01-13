@@ -1,4 +1,4 @@
-export class Address {
+export class Depense {
   depenseId?: string;
   description: string;
   montant: string;
