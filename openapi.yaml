@@ -116,14 +116,6 @@ paths:
                   error:
                     type: string
                     example: Une erreur interne du serveur s'est produit.
-  /user/{userId}:
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        description: ID numérique de l'utilisateur
-        schema:
-          type: integer
     post:
       summary: Ajoute un user
       description: Ajoute un user avec les données fournis dans le corps de la requête
@@ -139,6 +131,14 @@ paths:
           description: Données enregistrées avec succès.
         '500':
           description: Erreur interne du serveur.
+  /user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: ID numérique de l'utilisateur
+        schema:
+          type: integer
     get:
       summary: Récupère un user spécifique
       description: Récupère un user spécifique en fonction de l'id fournit dans l'url.
