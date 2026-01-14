@@ -31,11 +31,11 @@ describe("InMemoryUserRepo", () => {
     });
 
     it("should find user by id", async () => {
-        const user = new User("john", "doe");
+        const user = new User("john", "doe", "1");
         users.push(user);
         repo = new InMemoryUserRepo(users);
 
-        const foundUser = await repo.findById(user.userId);
+        const foundUser = await repo.findById(user.userId!);
         expect(foundUser).toEqual(user);
     });
 
