@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { Cercle } from "../../domain/cercle";
+import { Cercle, createCercleDTO } from "../../domain/cercle";
 import { CerclePort } from "../../ports/driving/cerclePort";
 import {Request, Response} from "express";
 
@@ -26,11 +26,11 @@ export class CercleController {
   }
 
   async createCercle(req: Request, res: Response) {
-    const { nom, prenom } = req.body;
-    if (!nom || !prenom ) {
-      return res.status(400).json({ message: 'nom and prenom required' });
+    const { nom, userList } = req.body;
+    if (!nom || !userList) {
+      return res.status(400).json({ message: 'nom and userList required' });
     }
-    const created = await this.service.createCercle(new Cercle(nom, prenom));
+    const created = await this.service.createCercle(new createCercleDTO(nom, userList));
     res.status(201).json(created);
   }
 
@@ -43,8 +43,8 @@ export class CercleController {
 
   async modifyCercle(req: Request, res: Response) {
     const cercleId = req.params.cercleId;
-    const { nom, prenom } = req.body;
-    const toUpdate = new Cercle(nom, prenom);
+    const { nom, userList } = req.body;
+    const toUpdate = new Cercle(nom, userList);
     toUpdate.cercleId = cercleId;
     const updated = await this.service.updateCercle(toUpdate);
     if (!updated) return res.status(404).json({ message: 'Not found' });

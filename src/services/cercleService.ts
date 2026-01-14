@@ -20,7 +20,7 @@ export class CercleService implements CerclePort {
     return this.repo.modify(input);
   }
 
-  async deleteCercle(id: string): Promise<void> {
+  async deleteCercle(id: string): Promise<string> {
     return this.repo.delete(id);
   }
 
