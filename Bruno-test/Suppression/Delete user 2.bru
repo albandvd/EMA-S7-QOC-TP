@@ -1,0 +1,16 @@
+meta {
+  name: Delete user 2
+  type: http
+  seq: 2
+}
+
+delete {
+  url: http://localhost:3000/user/{{userId2}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

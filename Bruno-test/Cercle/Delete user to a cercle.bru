@@ -1,0 +1,15 @@
+meta {
+  name: Delete user to a cercle 
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:3000/cercle/{{cercleID}}/user/{{userId}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

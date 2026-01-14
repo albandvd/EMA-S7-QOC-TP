@@ -1,0 +1,34 @@
+meta {
+  name: Create a circle
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/cercle
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nom": "Les salopards",
+    "userList": []
+  }
+}
+
+tests {
+  test("Cercle créé", () => {
+    expect(res.status).to.equal(201)
+  
+    const body = res.body
+    expect(body).to.have.property("cercleId")
+    const cercleId = body.cercleId
+    bru.setVar("cercleId", cercleId)
+  })
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

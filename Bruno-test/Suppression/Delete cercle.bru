@@ -1,0 +1,15 @@
+meta {
+  name: Delete cercle
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:3000/cercle/{{cercleId}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

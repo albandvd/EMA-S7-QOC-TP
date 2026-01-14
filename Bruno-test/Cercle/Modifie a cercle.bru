@@ -1,0 +1,31 @@
+meta {
+  name: Modifie a cercle
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3000/cercle/{{cercleId}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nom": "Les  gros salopards",
+    "userList": []
+  }
+}
+
+tests {
+  test("User récupéré", () => {
+    expect(res.status).to.equal(200)
+    expect(res.body).to.have.property("nom", "Les gros salopards")
+  })
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

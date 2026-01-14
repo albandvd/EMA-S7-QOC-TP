@@ -1,0 +1,37 @@
+meta {
+  name: Create a Depense
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/depense
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "description": "course de fou",
+    "montant": 42,
+    "userId": "{{userId1}}",
+    "magasin": "Carrefour",
+    "date": "2025-01-01T10:00:00Z"
+  }
+}
+
+tests {
+  test("Depense créé", () => {
+    expect(res.status).to.equal(201)
+  
+    const body = res.body
+    expect(body).to.have.property("depenseId")
+    const depenseId = body.depenseId
+    bru.setVar("depenseId", depenseId)
+  })
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
