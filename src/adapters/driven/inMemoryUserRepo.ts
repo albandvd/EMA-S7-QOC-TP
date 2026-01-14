@@ -16,10 +16,11 @@ export class InMemoryUserRepo implements UserRepositoryPort {
 
     async save(user: createUserDTO): Promise<User> {
         const uuid = uuidv4();
+        console.log(user)
 
         const newUser: User = new User(
-            user.prenom,
             user.nom,
+            user.prenom,
             uuid
         );
         this.store.push(newUser);
@@ -36,12 +37,13 @@ export class InMemoryUserRepo implements UserRepositoryPort {
         return user;
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: string): Promise<string> {
         const found = this.store.find((s) => s.userId === id);
         if (!found) {
             throw new Error("User not found");
         }
         const index = this.store.indexOf(found);
         this.store.splice(index, 1);
+        return 'User deleted successfully';
     }
 }

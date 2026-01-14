@@ -12,8 +12,10 @@ describe("InMemoryUserRepo", () => {
     });
 
     it("should save an user", async () => {
-        const userData = new createUserDTO("john", "doe");
+        const userData = new createUserDTO("doe", "john");
+        console.log(userData);
         const savedUser = await repo.save(userData);
+        console.log(savedUser);
 
         expect(savedUser).toHaveProperty("userId");
         expect(savedUser.nom).toBe(userData.nom);
@@ -22,7 +24,7 @@ describe("InMemoryUserRepo", () => {
     });
 
     it("should get all users by duplicating variable", async () => {
-        users = [new User("john", "doe"), new User("jane", "doe")];
+        users = [new User("doe", "john"), new User("doe", "jane")];
         repo = new InMemoryUserRepo(users);
         const allUsers = await repo.findAll();
 
