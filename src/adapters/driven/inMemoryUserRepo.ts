@@ -16,7 +16,6 @@ export class InMemoryUserRepo implements UserRepositoryPort {
 
     async save(user: createUserDTO): Promise<User> {
         const uuid = uuidv4();
-        console.log(user)
 
         const newUser: User = new User(
             user.nom,

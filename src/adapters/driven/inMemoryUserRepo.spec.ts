@@ -13,9 +13,7 @@ describe("InMemoryUserRepo", () => {
 
     it("should save an user", async () => {
         const userData = new createUserDTO("doe", "john");
-        console.log(userData);
         const savedUser = await repo.save(userData);
-        console.log(savedUser);
 
         expect(savedUser).toHaveProperty("userId");
         expect(savedUser.nom).toBe(userData.nom);
