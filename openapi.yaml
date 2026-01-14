@@ -1,84 +1,456 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: AddressApp API
-  version: 0.1.0
+  title: KashKash
+  description: API de gestion de dépenses.
+  version: 1.0.12
+
 paths:
-  /addresses:
+  /depense:
     get:
-      summary: List addresses
+      summary: Récupère l'ensemble des dépenses
+      tags:
+        - Dépenses
       responses:
         '200':
-          description: OK
+          description: Liste des dépenses récupérée.
           content:
-            application/json:
+            application/json: 
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Address'
+                  $ref: '#/components/schemas/Depense'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
     post:
-      summary: Create address
+      summary: Ajoute une dépense
+      tags:
+        - Dépenses
+      requestBody: 
+        required: true
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/DepenseInput'
+      responses:
+        '201':
+          description: Dépense créée avec succès.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /depense/{depenseId}:
+    parameters:
+      - name: depenseId
+        in: path
+        required: true
+        description: ID de la dépense
+        schema:
+          type: integer
+    get:
+      summary: Récupère une dépense spécifique
+      tags:
+        - Dépenses
+      responses:
+        '200':
+          description: Succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Depense'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Modifie une dépense
+      tags:
+        - Dépenses
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddressInput'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-
-  /addresses/{id}:
-    get:
-      summary: Get address by id
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
+              $ref: '#/components/schemas/DepenseInput'
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
+          description: Dépense mise à jour.
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Supprime une dépense
+      tags:
+        - Dépenses
+      responses:
+        '204':
+          description: Dépense supprimée.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /user:
+    get:
+      summary: Récupère l'ensemble des users
+      description: Récupère l'ensemble des users.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+  /user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: ID numérique de l'utilisateur
+        schema:
+          type: integer
+    post:
+      summary: Ajoute un user
+      description: Ajoute un user avec les données fournis dans le corps de la requête
+      tags:
+        - Users
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
+    get:
+      summary: Récupère un user spécifique
+      description: Récupère un user spécifique en fonction de l'id fournit dans l'url.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+    put:
+      summary: Modifie un user
+      description: Modifie un user avec les données fournis dans le corps de la requête
+      tags:
+        - Users
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+    delete:
+      summary: Supprime un user
+      description: Supprime le user ayant l'id spécifié dans l'URL.
+      tags:
+        - Users
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+  /cercle:
+    get:
+      summary: Récupère l'ensemble des cercle
+      description: Récupère l'ensemble des users.
+      tags:
+        - Cercle
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Cercle'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+    post:
+      summary: Ajoute un cercle
+      description: Ajoute un cercle avec les données fournis dans le corps de la requête
+      tags:
+        - Cercle
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Cercle'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
+  /cercle/{cercleId}:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique de l'utilisateur
+        schema:
+          type: integer
+    get:
+      summary: Récupère l'ensemble des cercle
+      description: Récupère l'ensemble des users.
+      tags:
+        - Cercle
+      responses:
+        '200':
+          description: Données récupérées avec succès.
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Cercle'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Une erreur interne du serveur s'est produit.
+    put:
+      summary: Modifie un cercle
+      description: Modifie un cercle avec les données fournis dans le corps de la requête
+      tags:
+        - Cercle
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Cercle'
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+    delete:
+      summary: Supprime un cercle
+      description: Supprime le cercle ayant l'id spécifié dans l'URL.
+      tags:
+        - Cercle
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+
+  /cercle/{cercleId}/user:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+    post:
+      summary: Ajoute un cercle
+      description: Ajoute un cercle avec les données fournis dans le corps de la requête
+      tags:
+        - Cercle
+      requestBody: 
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Cercle'
+      responses:
+        '201':
+          description: Données enregistrées avec succès.
+        '500':
+          description: Erreur interne du serveur.
+  /cercle/{cercleId}/user/{userId}:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+      - name: userId
+        in: path
+        required: true
+        description: ID numérique de l'utilisateur
+        schema:
+          type: integer
+    delete:
+      summary: Supprime un utilisateur du cercle
+      description: Supprime le cercle ayant l'id spécifié dans l'URL.
+      tags:
+        - Cercle
+      responses:
+        '201':
+          description: Données modifiées avec succès
+        '500':
+          description: Erreur interne du serveur.
+
+  /agreg/{cercleId}/magasin/:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+    get:
+      summary: Renvoi les magasins préférés des personnes d'un même cercle 
+      tags:
+        - Agrégation
+      responses:
+        '200':
+          description: Renvoi les magasins préférés des personnes d'un même cercle.
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Depense'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /agreg/{cercleId}/depense:
+    parameters:
+      - name: cercleId
+        in: path
+        required: true
+        description: ID numérique du cercle
+        schema:
+          type: integer
+    get:
+      summary: Renvoie le pourcentage de dépense des personnes d'un cercle
+      tags:
+        - Agrégation
+      responses:
+        '200':
+          description: Renvoie le pourcentage de dépense des personnes d'un cercle.
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Depense'
+        '500':
+          $ref: '#/components/responses/ServerError'
 
 components:
-  schemas:
-    Address:
-      type: object
-      properties:
-        id:
-          type: string
-        street:
-          type: string
-        city:
-          type: string
-        zip:
-          type: string
-      required:
-        - id
-        - street
-        - city
-        - zip
+  responses:
+    BadRequest:
+      description: La requête est invalide (champs manquants ou mauvais format).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: La ressource demandée n'existe pas.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Erreur interne du serveur.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
 
-    AddressInput:
+  schemas:
+    Error:
       type: object
       properties:
-        street:
+        code:
+          type: integer
+        message:
           type: string
-        city:
+      example:
+        code: 404
+        message: "La dépense avec l'ID 123 n'a pas été trouvée."
+
+    User: 
+      type: object
+      properties:
+        Prenom:
           type: string
-        zip:
+        Nom:
           type: string
+        userId:
+          type: integer
+
+    Cercle:
+      type: object
+      properties:
+        Name:
+          type: string
+        UserList:
+          type: array
+          items:
+            type: integer
+
+    DepenseInput:
+      type: object
       required:
-        - street
-        - city
-        - zip
+        - description
+        - montant
+        - userId
+      properties:
+        description:
+          type: string
+        montant:
+          type: number
+        userId:
+          type: integer
+        magasin: 
+          type: string
+        date:
+          type: string
+          format: date-time
+
+    Depense:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+        - $ref: '#/components/schemas/DepenseInput'
