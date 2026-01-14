@@ -3,7 +3,7 @@ import { createDepenseDTO, Depense } from "../../domain/depense";
 import { DepensePort } from "../../ports/driving/depensePort";
 import { Request, Response } from "express";
 
-export class AddressController {
+export class DepenseController {
 	private service: DepensePort;
 
 	constructor(private readonly depenseService: DepensePort) {
