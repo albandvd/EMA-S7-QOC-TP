@@ -1,9 +1,9 @@
-import { Depense } from '../../domain/depense';
+import { Depense } from "../../domain/depense";
 
 export interface DepensePort {
-  listDepenses(): Promise<Depense[]>;
-  getDepense(id: string): Promise<Depense | null>;
-  createDepense(input: Omit<Depense, 'depenseId'>): Promise<Depense>;
-  updateDepense(input: Depense): Promise<Depense>;
-  deleteDepense(id: string): Promise<void>;
+	listDepenses(): Promise<Depense[]>;
+	getDepense(depenseId: string): Promise<Depense | null>;
+	createDepense(input: Omit<Depense, "depenseId">): Promise<Depense>;
+	updateDepense(depenseId: string, input: Depense): Promise<Depense>;
+	deleteDepense(depenseId: string): Promise<void>;
 }

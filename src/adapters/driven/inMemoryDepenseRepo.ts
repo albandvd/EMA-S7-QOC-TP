@@ -29,10 +29,8 @@ export class InMemoryDepenseRepo implements DepenseRepositoryPort {
 		return newDepense;
 	}
 
-	async modify(depense: Depense): Promise<Depense> {
-		const index = this.store.findIndex(
-			(s) => s.depenseId === depense.depenseId
-		);
+	async modify(depense: Depense, depenseId: string): Promise<Depense> {
+		const index = this.store.findIndex((s) => s.depenseId === depenseId);
 		if (index === -1) {
 			throw new Error("Depense not found");
 		}

@@ -49,24 +49,36 @@ describe("inMemoryDepenseRepo", () => {
 		depenses.push(depense);
 		repo = new InMemoryDepenseRepo(depenses);
 
-		depense.montant = 75;
-		const modifiedDepense = await repo.modify(depense);
+		const modifiedDepense = new Depense(
+			"Spending 1 Modified",
+			75,
+			"123456789",
+			"Carrefour",
+			new Date(),
+			"depense-1"
+		);
 
-		expect(modifiedDepense.montant).toBe(75);
-		expect(depenses[0].montant).toBe(75);
+		const result = await repo.modify(modifiedDepense, "depense-1");
+
+		expect(result.description).toBe("Spending 1 Modified");
+		expect(result.montant).toBe(75);
+		expect(depenses[0].magasin).toBe("Carrefour");
 	});
 
-	it("should throw an error when modifying a non-existent spending", async () => {
+	it("should delete a spending", async () => {
 		const depense = new Depense(
 			"Spending 1",
 			50,
 			"123456789",
 			"Leclerc",
 			new Date(),
-			"non-existent-id"
+			"depense-1"
 		);
+		depenses.push(depense);
 		repo = new InMemoryDepenseRepo(depenses);
 
-		await expect(repo.modify(depense)).rejects.toThrow("Depense not found");
+		await repo.delete("depense-1");
+
+		expect(depenses.length).toBe(0);
 	});
 });

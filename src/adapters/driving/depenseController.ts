@@ -33,8 +33,9 @@ export class AddressController {
 		res.status(201).json(depense);
 	}
 	async updateDepense(req: Request, res: Response): Promise<void> {
+		const { depenseId } = req.params;
 		const input = req.body;
-		const depense = await this.service.updateDepense(input);
+		const depense = await this.service.updateDepense(depenseId, input);
 		res.json(depense);
 	}
 	async deleteDepense(req: Request, res: Response): Promise<void> {
