@@ -28,8 +28,8 @@ export class AddressController {
 		res.json(depense);
 	}
 	async createDepense(req: Request, res: Response): Promise<void> {
-		const input = req.body;
-		const depense = await this.service.createDepense(input);
+		const {description, montant, userId, magasin, date} = req.body;
+		const depense = await this.service.createDepense(new createDepenseDTO(description, montant, userId, magasin, date));
 		res.status(201).json(depense);
 	}
 	async updateDepense(req: Request, res: Response): Promise<void> {

@@ -36,12 +36,13 @@ export class InMemoryCercleRepo implements CercleRepositoryPort {
         return cercle;
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: string): Promise<string> {
         const found = this.store.find((s) => s.cercleId === id);
         if (!found) {
             throw new Error("Cercle not found");
         }
         const index = this.store.indexOf(found);
         this.store.splice(index, 1);
+        return 'Cercle deleted successfully';
     }
 }
