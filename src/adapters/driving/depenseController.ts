@@ -18,19 +18,28 @@ export class AddressController {
 		app.get("/depense/:demandeId", this.deleteDepense.bind(this));
 	}
 
-	async listDepenses(): Promise<Depense[]> {
-		return await this.service.listDepenses();
+	async listDepenses(req: Request, res: Response): Promise<void> {
+		const depenses = await this.service.listDepenses();
+		res.json(depenses);
 	}
-	async getDepense(depenseId: string): Promise<Depense | null> {
-		return await this.service.getDepense(depenseId);
+	async getDepense(req: Request, res: Response): Promise<void> {
+		const { depenseId } = req.params;
+		const depense = await this.service.getDepense(depenseId);
+		res.json(depense);
 	}
-	async createDepense(input: Omit<Depense, "depenseId">): Promise<Depense> {
-		return await this.service.createDepense(input);
+	async createDepense(req: Request, res: Response): Promise<void> {
+		const input = req.body;
+		const depense = await this.service.createDepense(input);
+		res.status(201).json(depense);
 	}
-	async updateDepense(input: Depense): Promise<Depense> {
-		return await this.service.updateDepense(input);
+	async updateDepense(req: Request, res: Response): Promise<void> {
+		const input = req.body;
+		const depense = await this.service.updateDepense(input);
+		res.json(depense);
 	}
-	async deleteDepense(depenseId: string): Promise<void> {
-		return await this.service.deleteDepense(depenseId);
+	async deleteDepense(req: Request, res: Response): Promise<void> {
+		const { depenseId } = req.params;
+		await this.service.deleteDepense(depenseId);
+		res.sendStatus(204);
 	}
 }
