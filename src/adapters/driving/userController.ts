@@ -1,8 +1,5 @@
-import express, { Express } from 'express';
-import { InMemoryUserRepo } from '../driven/inMemoryUserRepo';
-import { UserService } from '../../services/userService';
-import { User } from "../../domain/user";
-import { UserRepositoryPort } from "../../ports/driven/repoPort";
+import { Express } from 'express';
+import { createUserDTO, User } from "../../domain/user";
 import { UserPort } from "../../ports/driving/userPort";
 import {Request, Response} from "express";
 
@@ -31,7 +28,7 @@ export class UserController {
     if (!nom || !prenom ) {
       return res.status(400).json({ message: 'nom and prenom required' });
     }
-    const created = await this.service.createUser(new User(nom, prenom));
+    const created = await this.service.createUser(new createUserDTO(nom, prenom));
     res.status(201).json(created);
   }
 

@@ -14,7 +14,7 @@ export interface UserRepositoryPort {
   findById(id: string): Promise<User | null>;
   save(user: Omit<User, 'userId'>): Promise<User>;
   modify(user: User): Promise<User>;
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<string>;
 }
 
 export interface DepenseRepositoryPort {
@@ -30,5 +30,5 @@ export interface CercleRepositoryPort {
   findById(id: string): Promise<Cercle | null>;
   save(cercle: Omit<Cercle, 'cercleId'>): Promise<Cercle>;
   modify(cercle: Cercle): Promise<Cercle>;
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<string>;
 }

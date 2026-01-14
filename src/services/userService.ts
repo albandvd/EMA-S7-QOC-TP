@@ -21,7 +21,7 @@ export class UserService implements UserPort {
     return this.repo.modify(input);
   }
 
-  async deleteUser(id: string): Promise<void> {
+  async deleteUser(id: string): Promise<string> {
     return this.repo.delete(id);
   }
 }
