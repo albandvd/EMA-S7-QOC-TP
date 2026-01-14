@@ -1,60 +1,81 @@
-import { Express } from 'express';
+import { Express } from "express";
 import { Cercle, createCercleDTO } from "../../domain/cercle";
 import { CerclePort } from "../../ports/driving/cerclePort";
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 
 export class CercleController {
-  private service: CerclePort;
+	private service: CerclePort;
 
-  constructor(private readonly CercleService: CerclePort) {
-    this.service = CercleService;
-  }
+	constructor(private readonly CercleService: CerclePort) {
+		this.service = CercleService;
+	}
 
-  registerRoutes(app: Express) {
-    app.get('/cercle', this.getAllCercles.bind(this));
-    app.post('/cercle', this.createCercle.bind(this));
-    app.get('/cercle/:cercleId', this.getCercle.bind(this));
-    app.put('/cercle/:cercleId', this.modifyCercle.bind(this));
-    app.delete('/cercle/:cercleId', this.deleteCercle.bind(this));
-    app.post('/cercle/:cercleId/user', this.createCercle.bind(this));
-    app.delete('/cercle/:cercleId/user/:userId', this.createCercle.bind(this));
-  }
+	registerRoutes(app: Express) {
+		app.get("/cercle", this.getAllCercles.bind(this));
+		app.post("/cercle", this.createCercle.bind(this));
+		app.get("/cercle/:cercleId", this.getCercle.bind(this));
+		app.put("/cercle/:cercleId", this.modifyCercle.bind(this));
+		app.delete("/cercle/:cercleId", this.deleteCercle.bind(this));
+		app.post("/cercle/:cercleId/user", this.addUserToCercle.bind(this));
+		app.delete(
+			"/cercle/:cercleId/user/:userId",
+			this.removeUserFromCercle.bind(this)
+		);
+	}
 
-  async getAllCercles(req: Request, res: Response) {
-    const list = await this.service.listCercles();
-    res.json(list);
-  }
+	async getAllCercles(req: Request, res: Response) {
+		const list = await this.service.listCercles();
+		res.json(list);
+	}
 
-  async createCercle(req: Request, res: Response) {
-    const { nom, userList } = req.body;
-    if (!nom || !userList) {
-      return res.status(400).json({ message: 'nom and userList required' });
-    }
-    const created = await this.service.createCercle(new createCercleDTO(nom, userList));
-    res.status(201).json(created);
-  }
+	async createCercle(req: Request, res: Response) {
+		const { nom, userList } = req.body;
+		if (!nom || !userList) {
+			return res.status(400).json({ message: "nom and userList required" });
+		}
+		const created = await this.service.createCercle(
+			new createCercleDTO(nom, userList)
+		);
+		res.status(201).json(created);
+	}
 
-  async getCercle(req: Request, res: Response) {
-    const cercleId = req.params.cercleId;
-    const found = await this.service.getCercle(cercleId);
-    if (!found) return res.status(404).json({ message: 'Not found' });
-    res.json(found);
-  }
+	async getCercle(req: Request, res: Response) {
+		const cercleId = req.params.cercleId;
+		const found = await this.service.getCercle(cercleId);
+		if (!found) return res.status(404).json({ message: "Not found" });
+		res.json(found);
+	}
 
-  async modifyCercle(req: Request, res: Response) {
-    const cercleId = req.params.cercleId;
-    const { nom, userList } = req.body;
-    const toUpdate = new Cercle(nom, userList);
-    toUpdate.cercleId = cercleId;
-    const updated = await this.service.updateCercle(toUpdate);
-    if (!updated) return res.status(404).json({ message: 'Not found' });
-    res.json(updated);
-  }
+	async modifyCercle(req: Request, res: Response) {
+		const cercleId = req.params.cercleId;
+		const { nom, userList } = req.body;
+		const toUpdate = new Cercle(nom, userList);
+		toUpdate.cercleId = cercleId;
+		const updated = await this.service.updateCercle(toUpdate);
+		if (!updated) return res.status(404).json({ message: "Not found" });
+		res.json(updated);
+	}
 
-  async deleteCercle(req: Request, res: Response) {
-    const cercleId = req.params.cercleId;
-    const deleted = await this.service.deleteCercle(cercleId);
-    if (!deleted) return res.status(404).json({ message: 'Not found' });
-    res.status(204).send();
-  }
+	async deleteCercle(req: Request, res: Response) {
+		const cercleId = req.params.cercleId;
+		const deleted = await this.service.deleteCercle(cercleId);
+		if (!deleted) return res.status(404).json({ message: "Not found" });
+		res.status(204).send();
+	}
+
+	async addUserToCercle(req: Request, res: Response) {
+		const cercleId = req.params.cercleId;
+		const { userId } = req.body;
+		const updated = await this.service.addUserToCercle(cercleId, userId);
+		if (!updated) return res.status(404).json({ message: "Not found" });
+		res.json(updated);
+	}
+
+	async removeUserFromCercle(req: Request, res: Response) {
+		const cercleId = req.params.cercleId;
+		const userId = req.params.userId;
+		const updated = await this.service.removeUserFromCercle(cercleId, userId);
+		if (!updated) return res.status(404).json({ message: "Not found" });
+		res.json(updated);
+	}
 }
