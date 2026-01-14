@@ -1,4 +1,4 @@
-import { Depense } from "../domain/depense";
+import { createDepenseDTO, Depense } from "../domain/depense";
 import { DepenseRepositoryPort } from "../ports/driven/repoPort";
 import { DepensePort } from "../ports/driving/depensePort";
 
@@ -13,7 +13,7 @@ export class DepenseService implements DepensePort {
 		return this.repo.findById(id);
 	}
 
-	async createDepense(input: Omit<Depense, "depenseId">): Promise<Depense> {
+	async createDepense(input: createDepenseDTO): Promise<Depense> {
 		return this.repo.save(input);
 	}
 
