@@ -5,5 +5,5 @@ export interface CerclePort {
   getCercle(id: string): Promise<Cercle | null>;
   createCercle(input: Omit<Cercle, 'CercleId'>): Promise<Cercle>;
   updateCercle(input: Cercle): Promise<Cercle>;
-  deleteCercle(id: string): Promise<void>;
+  deleteCercle(id: string): Promise<string>;
 }
