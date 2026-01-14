@@ -23,15 +23,15 @@ import { DepenseController } from './adapters/driving/depenseController';
 const app = express();
 app.use(express.json());
 
-const addressRepo = new InMemoryAddressRepo();
-const cercleRepo = new InMemoryCercleRepo();
-const userRepo = new InMemoryUserRepo();
-const depenseRepo = new InMemoryDepenseRepo();
-
 const file  = fs.readFileSync('./openapi.yaml', 'utf8')
 const swaggerDocument = YAML.parse(file)
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+const addressRepo = new InMemoryAddressRepo();
+const cercleRepo = new InMemoryCercleRepo();
+const userRepo = new InMemoryUserRepo();
+const depenseRepo = new InMemoryDepenseRepo();
 
 const addressService = new AddressService(addressRepo);
 const cercleService = new CercleService(cercleRepo);
